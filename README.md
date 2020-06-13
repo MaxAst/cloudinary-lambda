@@ -1,0 +1,3 @@
+# Cloudinary Lambda Function
+
+This function accepts an image file via a multipart/form-data POST request. It uses the busboy package to compress the image file using `sharp`, `imagemin`, and the `imagemin-mozjpeg` plugin. The latter uses an executable called `cjpeg`, which is why it's important to run `npm install` on an OS that matches AWS Lambda's OS. For example, running `npm install` locally on a mac and then uploading a zip to AWS Lambda won't work because AWS cannot execute the `cjpeg` binary. Using `npm install --arch=x64 --platform=linux` for the trouble making node modules didn't solve the problem either. This is why we use AWS CodeBuild so that node modules are installed in an environment that matches that of the AWS Lambda function.
